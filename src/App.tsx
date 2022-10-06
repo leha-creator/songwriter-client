@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import SongwriterAPI from "./utils/SongwriterAPI";
+import {Song} from "./models/Song";
 
 function App() {
+  const [songTitle, setSongTitle] = useState('Undefined')
+
+  useEffect(() => {
+    SongwriterAPI.getSong(1, setSongTitle)
+    // console.log(song)
+    // setSongTitle(song.title);
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {songTitle}
     </div>
   );
 }
