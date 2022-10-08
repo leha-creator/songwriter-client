@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import SongwriterAPI from "../utils/SongwriterAPI";
 import {Song} from "../models/Song";
 
 
-function songComponent({id} : {id : number}) {
-    const [song, setSong] = useState(new Song);
+function SongComponent({id}: { id: number | null }) {
+    const [song, setSong] = useState(new Song());
 
     useEffect(() => {
         SongwriterAPI.getSong(id)
             .then(response => {
-                setSong(response);
-            })
-    }, [])
+                let song = new Song(response.title, response.id, response.songcontent);
+                setSong(song);
+            });
+    }, [id]);
 
     return (
         <div>
-            {song.title}
+            <div>
+                {song.title !== null ? song.title : 'Песня не выбрана'}
+                {song.getJSXContent()}
+            </div>
+
+            <div>
+            </div>
         </div>
     );
 }
 
-export default songComponent;
+export default SongComponent;

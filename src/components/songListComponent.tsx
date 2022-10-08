@@ -2,23 +2,24 @@ import React, {useEffect, useState} from 'react';
 
 import SongwriterAPI from "../utils/SongwriterAPI";
 
-function SongListComponent() {
+function SongListComponent({setActualSongId} : {setActualSongId : Function}) {
     const [songListItems, setSongListItems] = useState<JSX.Element[]>()
+
+
     useEffect(() => {
         SongwriterAPI.getSongs()
             .then(songs => {
                 setSongListItems(songs.map((song) => {
-                    return <li key={song.id}>{song.title}</li>
+                    return <button key={song.id} onClick={() => setActualSongId(song.id)}>{song.title}</button>
                 }));
 
             })
-        console.log(1);
     }, [])
 
     return (
-        <ul>
+        <div>
             {songListItems}
-        </ul>
+        </div>
     );
 }
 
