@@ -36,7 +36,7 @@ export class Song implements ISong {
         }
     }
 
-    getJSXContent = () => {
+    getJSXContent() {
         if (Array.isArray(this.songcontent)) {
             let JSXSongContent = [];
             for (let songPartIndex in this.songcontent) {

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import SongwriterAPI from '../utils/SongwriterAPI';
+import '../styles/components/song-list.css';
 
-import SongwriterAPI from "../utils/SongwriterAPI";
-
-function SongListComponent({setActualSongId} : {setActualSongId : Function}) {
+export function SongListComponent({setActualSongId}: { setActualSongId: Function }) {
     const [songListItems, setSongListItems] = useState<JSX.Element[]>()
 
 
@@ -10,17 +10,22 @@ function SongListComponent({setActualSongId} : {setActualSongId : Function}) {
         SongwriterAPI.getSongs()
             .then(songs => {
                 setSongListItems(songs.map((song) => {
-                    return <button key={song.id} onClick={() => setActualSongId(song.id)}>{song.title}</button>
+                    return <button className='song-list__item'
+                                   key={song.id}
+                                   onClick={() => setActualSongId(song.id)}>
+                        {song.title}
+                    </button>
                 }));
 
             })
     }, [])
 
     return (
-        <div>
-            {songListItems}
+        <div className='song-list'>
+            <div className="song-list__header">Выберите песню</div>
+            <div className="song-list__items">
+                {songListItems}
+            </div>
         </div>
     );
 }
-
-export default SongListComponent;
